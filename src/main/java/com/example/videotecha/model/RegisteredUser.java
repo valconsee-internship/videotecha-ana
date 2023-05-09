@@ -14,22 +14,22 @@ public class RegisteredUser {
     @Column(name="reg_user_id", unique=true, nullable=false)
     private Long id;
 
-    @Column(name="first_name", nullable=false)
+    @Column(nullable=false)
     private String firstName;
 
-    @Column(name="first_name", nullable=false)
+    @Column(nullable=false)
     private String lastName;
 
-    @Column(name="first_name", unique=true, nullable=false)
+    @Column(unique=true, nullable=false)
     private String email;
 
-    @Column(name="first_name", unique=true, nullable=false)
+    @Column(unique=true, nullable=false)
     private String username;
 
-    @Column(name="first_name", nullable=false)
+    @Column(nullable=false)
     private String password;
 
-    @Column(name="first_name", nullable=false)
+    @Column(nullable=false)
     private UserRole role;
 
     public RegisteredUser() {}
