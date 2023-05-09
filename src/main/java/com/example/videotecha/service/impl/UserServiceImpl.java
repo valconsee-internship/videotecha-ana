@@ -2,8 +2,8 @@ package com.example.videotecha.service.impl;
 
 import com.example.videotecha.dto.UserDto;
 import com.example.videotecha.mapper.UserMapper;
-import com.example.videotecha.model.RegisteredUser;
-import com.example.videotecha.repository.RegisteredUserRepository;
+import com.example.videotecha.model.User;
+import com.example.videotecha.repository.UserRepository;
 import com.example.videotecha.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,26 +11,25 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final RegisteredUserRepository registeredUserRepository;
+    private final UserRepository registeredUserRepository;
 
-    public UserServiceImpl(RegisteredUserRepository registeredUserRepository) {
+    public UserServiceImpl(UserRepository registeredUserRepository) {
         this.registeredUserRepository = registeredUserRepository;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<RegisteredUser> findAllUsers() {
+    public List<User> findAllUsers() {
         return registeredUserRepository.findAll();
     }
 
     @Override
     @Transactional
-    public RegisteredUser save(UserDto user) {
+    public User save(UserDto user) {
         validateUser(user);
         return registeredUserRepository.save(UserMapper.userDtoToRegisteredUser(user));
     }

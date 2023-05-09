@@ -6,7 +6,8 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class RegisteredUser {
+@Table(name = "users")
+public class User {
 
     @Id
     @SequenceGenerator(name = "userSequenceGenerator", sequenceName = "userSequenceGenerator", initialValue = 1, allocationSize = 1)
@@ -32,9 +33,9 @@ public class RegisteredUser {
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
-    public RegisteredUser() {}
+    public User() {}
 
-    public RegisteredUser(String firstName, String lastName, String email, String username, String password, UserRole role) {
+    public User(String firstName, String lastName, String email, String username, String password, UserRole role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -99,7 +100,7 @@ public class RegisteredUser {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RegisteredUser that = (RegisteredUser) o;
+        User that = (User) o;
         return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(email, that.email) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && role == that.role;
     }
 

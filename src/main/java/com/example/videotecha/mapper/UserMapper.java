@@ -1,12 +1,12 @@
 package com.example.videotecha.mapper;
 
 import com.example.videotecha.dto.UserDto;
-import com.example.videotecha.model.RegisteredUser;
+import com.example.videotecha.model.User;
 
 public class UserMapper {
 
-    public static RegisteredUser userDtoToRegisteredUser(UserDto user) {
-        return new RegisteredUser(
+    public static User userDtoToRegisteredUser(UserDto user) {
+        return new User(
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),

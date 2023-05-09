@@ -1,8 +1,8 @@
 package com.example.videotecha.service;
 
 import com.example.videotecha.dto.UserDto;
-import com.example.videotecha.model.RegisteredUser;
+import com.example.videotecha.model.User;
 
 public interface AuthenticationService {
-    RegisteredUser register(UserDto user);
+    User register(UserDto user);
 }
