@@ -11,7 +11,7 @@ public class RegisteredUser {
     @Id
     @SequenceGenerator(name = "userSequenceGenerator", sequenceName = "userSequenceGenerator", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSequenceGenerator")
-    @Column(name="reg_user_id", unique=true, nullable=false)
+    @Column(name="id", unique=true, nullable=false)
     private Long id;
 
     @Column(nullable=false)
@@ -29,7 +29,7 @@ public class RegisteredUser {
     @Column(nullable=false)
     private String password;
 
-    @Column(nullable=false)
+    @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
     public RegisteredUser() {}
@@ -93,10 +93,6 @@ public class RegisteredUser {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
     }
 
     @Override

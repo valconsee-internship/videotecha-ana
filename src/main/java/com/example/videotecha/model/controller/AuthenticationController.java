@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/auth")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
@@ -19,9 +19,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<RegisteredUser> register(@RequestBody UserDto user) {
+    public RegisteredUser register(@RequestBody UserDto user) {
         RegisteredUser registeredUser = authenticationService.register(user);
-        return new ResponseEntity<>(registeredUser, HttpStatus.OK);
+        return registeredUser;
     }
 
 }

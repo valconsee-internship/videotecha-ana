@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-    List<RegisteredUser> getAllUsers();
+    List<RegisteredUser> findAllUsers();
 
     RegisteredUser save(UserDto user);
 }
