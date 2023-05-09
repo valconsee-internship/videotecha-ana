@@ -20,7 +20,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         validateUser(user);
 
         RegisteredUser registeredUser = UserMapper.UserDtoToRegisteredUser(user);
-        registeredUser.setId(UUID.randomUUID().toString());
+        //registeredUser.setId(UUID.randomUUID().toString());
 
         VideotechaApplication.users.put(registeredUser.getId(), registeredUser);
 
@@ -33,7 +33,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private boolean emailExists(String email) {
-        for (Map.Entry<String, RegisteredUser> entry : VideotechaApplication.users.entrySet()) {
+        for (Map.Entry<Long, RegisteredUser> entry : VideotechaApplication.users.entrySet()) {
             RegisteredUser registeredUser = entry.getValue();
             if (registeredUser.getEmail().equals(email)) return true;
         }
@@ -41,7 +41,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private boolean usernameExists(String username) {
-        for (Map.Entry<String, RegisteredUser> entry : VideotechaApplication.users.entrySet()) {
+        for (Map.Entry<Long, RegisteredUser> entry : VideotechaApplication.users.entrySet()) {
             RegisteredUser registeredUser = entry.getValue();
             if (registeredUser.getUsername().equals(username)) return true;
         }

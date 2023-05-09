@@ -10,7 +10,7 @@ import java.util.UUID;
 @SpringBootApplication
 public class VideotechaApplication {
 
-	public static HashMap<String, RegisteredUser> users = new HashMap<>();
+	public static HashMap<Long, RegisteredUser> users = new HashMap<>();
 
 	public static void main(String[] args) {
 		SpringApplication.run(VideotechaApplication.class, args);
