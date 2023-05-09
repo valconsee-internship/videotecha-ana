@@ -5,6 +5,8 @@ import com.example.videotecha.mapper.UserMapper;
 import com.example.videotecha.model.RegisteredUser;
 import com.example.videotecha.repository.RegisteredUserRepository;
 import com.example.videotecha.service.AuthenticationService;
+import com.example.videotecha.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,25 +14,17 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    RegisteredUserRepository registeredUserRepository;
+    private final UserService userService;
 
-    public AuthenticationServiceImpl(RegisteredUserRepository registeredUserRepository) {
-        this.registeredUserRepository = registeredUserRepository;
+    public AuthenticationServiceImpl(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
+    @Transactional
     public RegisteredUser register(UserDto user) {
-        validateUser(user);
-        return registeredUserRepository.save(UserMapper.UserDtoToRegisteredUser(user));
+        return userService.save(user);
     }
 
-    private void validateUser(UserDto user) {
-        if(registeredUserRepository.findByEmail(user.getEmail()) != null) {
-            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with this username already exists");
-        }
 
-        if(registeredUserRepository.findByUsername(user.getUsername()) != null) {
-            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with this email already exists");
-        }
-    }
 }

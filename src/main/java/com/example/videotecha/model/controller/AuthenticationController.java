@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
 
-    AuthenticationService authenticationService;
+    private final AuthenticationService authenticationService;
 
     public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;

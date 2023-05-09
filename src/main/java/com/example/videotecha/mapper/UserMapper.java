@@ -5,7 +5,7 @@ import com.example.videotecha.model.RegisteredUser;
 
 public class UserMapper {
 
-    public static RegisteredUser UserDtoToRegisteredUser(UserDto user) {
+    public static RegisteredUser userDtoToRegisteredUser(UserDto user) {
         return new RegisteredUser(
                 user.getFirstName(),
                 user.getLastName(),
