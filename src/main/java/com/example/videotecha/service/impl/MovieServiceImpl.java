@@ -50,6 +50,12 @@ public class MovieServiceImpl implements MovieService {
         return id;
     }
 
+    @Override
+    @Transactional
+    public Movie update(Movie movie) {
+        return movieRepository.save(movie);
+    }
+
     private void validateMovie(Movie movie) {
         movieRepository.findByName(movie.getName())
                 .ifPresent(m -> {

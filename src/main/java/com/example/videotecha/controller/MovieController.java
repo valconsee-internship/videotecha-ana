@@ -46,4 +46,10 @@ public class MovieController {
         return movieService.delete(id);
     }
 
+    @PutMapping("/")
+    public Movie update(@RequestBody Movie movie) {
+        return movieService.update(movie);
+    }
+
+
 }
