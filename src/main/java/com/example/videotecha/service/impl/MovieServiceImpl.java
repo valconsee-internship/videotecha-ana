@@ -22,7 +22,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     @Transactional
     public Movie save(Movie movie) {
-        assertMovieExists(movie);
+        assertMovieNotExists(movie);
         return movieRepository.save(movie);
     }
 
@@ -59,7 +59,7 @@ public class MovieServiceImpl implements MovieService {
         return movieRepository.save(movie);
     }
 
-    private void assertMovieExists(Movie movie) {
+    private void assertMovieNotExists(Movie movie) {
         movieRepository.findByNameAndDeletedFalse(movie.getName())
                 .ifPresent(m -> {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This movie already exists.");
