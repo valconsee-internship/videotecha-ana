@@ -30,23 +30,23 @@ public class MovieServiceImpl implements MovieService {
     @Override
     @Transactional(readOnly = true)
     public List<Movie> findAll() {
-        return movieRepository.findAll();
+        return movieRepository.findByDeletedFalse();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Movie findById(Long id) {
-        return movieRepository.findById(id)
+        return movieRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no movie with this id."));
     }
 
     @Override
     @Transactional
     public Long delete(Long id) {
-        Movie movieForDeleting = movieRepository.findById(id)
+        Movie movieForDeleting = movieRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no movie with this id."));
 
-        movieRepository.delete(movieForDeleting);
+        movieRepository.deleteLogically(movieForDeleting.getId());
         return id;
     }
 
@@ -57,7 +57,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     private void validateMovie(Movie movie) {
-        movieRepository.findByName(movie.getName())
+        movieRepository.findByNameAndDeletedFalse(movie.getName())
                 .ifPresent(m -> {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This movie already exists.");
                 });
