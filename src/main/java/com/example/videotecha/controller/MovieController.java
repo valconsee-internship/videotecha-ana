@@ -42,7 +42,7 @@ public class MovieController {
     }
 
     @DeleteMapping("/{id}")
-    public Long delete(Long id) {
+    public Long delete(@PathVariable Long id) {
         return movieService.delete(id);
     }
 

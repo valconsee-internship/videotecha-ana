@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@SQLDelete(sql = "UPDATE table_product SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE movie SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
 public class Movie {
 
