@@ -38,6 +38,8 @@ public class Movie {
     @Column(nullable=false)
     private String description;
 
+    private Boolean deleted = false;
+
     public Movie() {}
 
     public Movie(String name, String director, List<Genre> genres, Integer length, String description) {
@@ -46,6 +48,15 @@ public class Movie {
         this.genres = genres;
         this.length = length;
         this.description = description;
+    }
+
+    public Movie(String name, String director, List<Genre> genres, Integer length, String description, Boolean isDeleted) {
+        this.name = name;
+        this.director = director;
+        this.genres = genres;
+        this.length = length;
+        this.description = description;
+        this.deleted = isDeleted;
     }
 
     public Long getId() {
@@ -72,17 +83,21 @@ public class Movie {
         return description;
     }
 
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return Objects.equals(id, movie.id) && Objects.equals(name, movie.name) && Objects.equals(director, movie.director) && Objects.equals(genres, movie.genres) && Objects.equals(length, movie.length) && Objects.equals(description, movie.description);
+        return Objects.equals(id, movie.id) && Objects.equals(name, movie.name) && Objects.equals(director, movie.director) && Objects.equals(genres, movie.genres) && Objects.equals(length, movie.length) && Objects.equals(description, movie.description) && Objects.equals(deleted, movie.deleted);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, director, genres, length, description);
+        return Objects.hash(id, name, director, genres, length, description, deleted);
     }
 
     @Override
@@ -94,6 +109,7 @@ public class Movie {
                 ", genres=" + genres +
                 ", length=" + length +
                 ", description='" + description + '\'' +
+                ", isDeleted=" + deleted +
                 '}';
     }
 }
