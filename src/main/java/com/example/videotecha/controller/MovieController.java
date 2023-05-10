@@ -25,12 +25,12 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public Movie create(@RequestBody MovieDto movieDto) {
         return movieService.save(MovieMapper.movieDtoToMovie(movieDto));
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<Movie> findAll() {
         return movieService.findAll();
     }
@@ -41,11 +41,11 @@ public class MovieController {
     }
 
     @DeleteMapping("/{id}")
-    public Long delete(@PathVariable Long id) {
+    public Long delete(@PathVariable("id") Long id) {
         return movieService.delete(id);
     }
 
-    @PutMapping("/")
+    @PutMapping
     public Movie update(@RequestBody Movie movie) {
         return movieService.update(movie);
     }

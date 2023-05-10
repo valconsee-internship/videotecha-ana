@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -23,7 +22,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     @Transactional
     public Movie save(Movie movie) {
-        validateMovie(movie);
+        assertMovieExists(movie);
         return movieRepository.save(movie);
     }
 
@@ -53,10 +52,14 @@ public class MovieServiceImpl implements MovieService {
     @Override
     @Transactional
     public Movie update(Movie movie) {
+        if(movieRepository.findByIdAndDeletedFalse(movie.getId()).isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no movie with this id.");
+        }
+
         return movieRepository.save(movie);
     }
 
-    private void validateMovie(Movie movie) {
+    private void assertMovieExists(Movie movie) {
         movieRepository.findByNameAndDeletedFalse(movie.getName())
                 .ifPresent(m -> {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This movie already exists.");

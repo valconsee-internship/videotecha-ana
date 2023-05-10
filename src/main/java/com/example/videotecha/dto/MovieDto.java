@@ -49,19 +49,6 @@ public class MovieDto {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MovieDto movieDto = (MovieDto) o;
-        return Objects.equals(name, movieDto.name) && Objects.equals(director, movieDto.director) && Objects.equals(genres, movieDto.genres) && Objects.equals(length, movieDto.length) && Objects.equals(description, movieDto.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, director, genres, length, description);
-    }
-
-    @Override
     public String toString() {
         return "MovieDto{" +
                 "name='" + name + '\'' +
