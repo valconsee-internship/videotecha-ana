@@ -10,6 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 
 import java.util.ArrayList;
@@ -39,6 +40,9 @@ public class Movie {
 
     @Column(nullable=false)
     private String description;
+
+    @OneToMany(mappedBy="movie")
+    private List<Projection> projections = new ArrayList<>();
 
     private Boolean deleted = false;
 
@@ -87,6 +91,14 @@ public class Movie {
 
     public boolean getDeleted() {
         return deleted;
+    }
+
+    public List<Projection> getProjections() {
+        return projections;
+    }
+
+    public void setProjections(List<Projection> projections) {
+        this.projections = projections;
     }
 
     @Override
