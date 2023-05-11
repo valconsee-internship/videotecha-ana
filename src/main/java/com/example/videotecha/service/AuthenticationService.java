@@ -5,4 +5,5 @@ import com.example.videotecha.model.User;
 
 public interface AuthenticationService {
     User register(UserDto user);
+
 }

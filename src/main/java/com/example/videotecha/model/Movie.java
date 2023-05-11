@@ -14,7 +14,6 @@ import jakarta.persistence.SequenceGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 public class Movie {
@@ -22,7 +21,7 @@ public class Movie {
     @Id
     @SequenceGenerator(name = "movieSequenceGenerator", sequenceName = "movieSequenceGenerator", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movieSequenceGenerator")
-    @Column(name="id", unique=true, nullable=false)
+    @Column(name="id")
     private Long id;
 
     @Column(nullable=false)

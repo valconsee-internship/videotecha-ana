@@ -15,4 +15,5 @@ public interface MovieService {
     Long delete(Long id);
 
     Movie update(Movie movie);
+
 }

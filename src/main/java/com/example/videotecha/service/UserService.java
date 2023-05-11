@@ -10,4 +10,5 @@ public interface UserService {
     List<User> findAllUsers();
 
     User save(UserDto user);
+
 }
