@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("theater")
 public class TheaterController {
 
-    TheaterService theaterService;
+    private final TheaterService theaterService;
 
     public TheaterController(TheaterService theaterService) {
         this.theaterService = theaterService;

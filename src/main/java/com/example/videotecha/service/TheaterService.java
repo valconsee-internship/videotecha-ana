@@ -9,4 +9,5 @@ public interface TheaterService {
     List<Theater> findAll();
 
     Theater findById(Long id);
+
 }

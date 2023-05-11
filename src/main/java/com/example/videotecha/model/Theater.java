@@ -13,7 +13,7 @@ public class Theater {
     @Id
     @SequenceGenerator(name = "theaterSequenceGenerator", sequenceName = "theaterSequenceGenerator", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "theaterSequenceGenerator")
-    @Column(name="id", unique=true, nullable=false)
+    @Column(name="id")
     private Long id;
 
     @Column(nullable=false)

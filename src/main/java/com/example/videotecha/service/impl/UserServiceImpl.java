@@ -37,12 +37,12 @@ public class UserServiceImpl implements UserService {
     private void validateUser(UserDto user) {
         registeredUserRepository.findByEmail(user.getEmail())
                 .ifPresent(u -> {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with this username already exists");
+                    throw new RuntimeException("User with this username already exists");
                 });
 
         registeredUserRepository.findByUsername(user.getUsername())
                 .ifPresent(u -> {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with this email already exists");
+                    throw new RuntimeException("User with this email already exists");
                 });
     }
 }
