@@ -10,4 +10,3 @@ INSERT INTO public.theater(id, "name", number_of_seats)
 VALUES (nextval('theater_sequence_generator'), 'Grand Room', 50),
        (nextval('theater_sequence_generator'), 'Indie Room', 10),
        (nextval('theater_sequence_generator'), 'Couple Room', 2);
-
