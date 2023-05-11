@@ -1,4 +1,4 @@
-package com.example.videotecha.model.controller;
+package com.example.videotecha.controller;
 
 import com.example.videotecha.dto.UserDto;
 import com.example.videotecha.model.User;

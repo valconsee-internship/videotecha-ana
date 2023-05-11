@@ -1,4 +1,4 @@
-package com.example.videotecha.model.controller;
+package com.example.videotecha.controller;
 
 import com.example.videotecha.model.User;
 import com.example.videotecha.service.UserService;
@@ -18,7 +18,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<User> getAll() {
         return userService.findAllUsers();
     }
