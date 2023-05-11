@@ -1,8 +1,10 @@
 package com.example.videotecha.dto;
 
+import com.example.videotecha.model.User;
 import com.example.videotecha.model.enums.UserRole;
 
 public class UserDto {
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -19,6 +21,16 @@ public class UserDto {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    public UserDto(User user) {
+        this.id = user.getId();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.role = user.getRole();
     }
 
     public String getFirstName() {
@@ -44,4 +56,5 @@ public class UserDto {
     public UserRole getRole() {
         return role;
     }
+
 }

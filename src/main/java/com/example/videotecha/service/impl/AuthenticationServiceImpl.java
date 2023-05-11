@@ -1,6 +1,5 @@
 package com.example.videotecha.service.impl;
 
-import com.example.videotecha.dto.UserDto;
 import com.example.videotecha.model.User;
 import com.example.videotecha.service.AuthenticationService;
 import com.example.videotecha.service.UserService;
@@ -18,7 +17,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     @Transactional
-    public User register(UserDto user) {
+    public User register(com.example.videotecha.dto.UserDto user) {
         return userService.save(user);
     }
 

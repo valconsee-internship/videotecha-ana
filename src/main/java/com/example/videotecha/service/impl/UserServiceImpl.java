@@ -1,14 +1,11 @@
 package com.example.videotecha.service.impl;
 
-import com.example.videotecha.dto.UserDto;
 import com.example.videotecha.mapper.UserMapper;
 import com.example.videotecha.model.User;
 import com.example.videotecha.repository.UserRepository;
 import com.example.videotecha.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -29,12 +26,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User save(UserDto user) {
+    public User save(com.example.videotecha.dto.UserDto user) {
         validateUser(user);
-        return registeredUserRepository.save(UserMapper.userDtoToRegisteredUser(user));
+        return registeredUserRepository.save(UserMapper.userDtoToUser(user));
     }
 
-    private void validateUser(UserDto user) {
+    private void validateUser(com.example.videotecha.dto.UserDto user) {
         registeredUserRepository.findByEmail(user.getEmail())
                 .ifPresent(u -> {
                     throw new RuntimeException("User with this username already exists");

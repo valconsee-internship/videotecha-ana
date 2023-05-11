@@ -26,18 +26,19 @@ public class MovieController {
     }
 
     @PostMapping
-    public Movie create(@RequestBody MovieDto movieDto) {
-        return movieService.save(MovieMapper.movieDtoToMovie(movieDto));
+    public MovieDto create(@RequestBody MovieDto movieDto) {
+        Movie newMovie = movieService.save(MovieMapper.movieDtoToMovie(movieDto));
+        return new MovieDto(newMovie);
     }
 
     @GetMapping
-    public List<Movie> findAll() {
-        return movieService.findAll();
+    public List<MovieDto> findAll() {
+        return MovieMapper.moviesToMovieDtos(movieService.findAll());
     }
 
     @GetMapping("/{id}")
-    public Movie findById(@PathVariable("id") Long id) {
-        return movieService.findById(id);
+    public MovieDto findById(@PathVariable("id") Long id) {
+        return new MovieDto(movieService.findById(id));
     }
 
     @DeleteMapping("/{id}")
@@ -46,8 +47,8 @@ public class MovieController {
     }
 
     @PutMapping
-    public Movie update(@RequestBody Movie movie) {
-        return movieService.update(movie);
+    public MovieDto update(@RequestBody Movie movie) {
+        return new MovieDto(movieService.update(movie));
     }
 
 }
