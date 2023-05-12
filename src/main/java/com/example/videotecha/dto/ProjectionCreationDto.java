@@ -1,6 +1,6 @@
 package com.example.videotecha.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class ProjectionCreationDto {
 
@@ -10,14 +10,14 @@ public class ProjectionCreationDto {
 
     private Long theaterId;
 
-    private Date startDateAndTime;
+    private LocalDateTime startDateAndTime;
 
     private int ticketPrice;
 
     public ProjectionCreationDto() {
     }
 
-    public ProjectionCreationDto(Long id, Long movieId, Long theaterId, Date startDateAndTime, int ticketPrice) {
+    public ProjectionCreationDto(Long id, Long movieId, Long theaterId, LocalDateTime startDateAndTime, int ticketPrice) {
         this.id = id;
         this.movieId = movieId;
         this.theaterId = theaterId;
@@ -37,7 +37,7 @@ public class ProjectionCreationDto {
         return theaterId;
     }
 
-    public Date getStartDateAndTime() {
+    public LocalDateTime getStartDateAndTime() {
         return startDateAndTime;
     }
 

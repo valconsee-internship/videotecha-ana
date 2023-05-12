@@ -41,7 +41,7 @@ public class Movie {
     @Column(nullable=false)
     private String description;
 
-    @OneToMany(mappedBy="movie")
+    @OneToMany(mappedBy="movie", fetch = FetchType.LAZY)
     private List<Projection> projections = new ArrayList<>();
 
     private Boolean deleted = false;

@@ -9,14 +9,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Projection {
 
     @Id
-    @SequenceGenerator(name = "movieSequenceGenerator", sequenceName = "movieSequenceGenerator", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movieSequenceGenerator")
+    @SequenceGenerator(name = "projectionSequenceGenerator", sequenceName = "projectionSequenceGenerator", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "projectionSequenceGenerator")
     @Column(name="id")
     private Long id;
 
@@ -29,7 +29,7 @@ public class Projection {
     private Theater theater;
 
     @Column(nullable=false)
-    private Date startDateAndTime;
+    private LocalDateTime startDateAndTime;
 
     @Column(nullable=false)
     private int ticketPrice;
@@ -41,7 +41,7 @@ public class Projection {
 
     public Projection() {}
 
-    public Projection(Movie movie, Theater theater, Date startDateAndTime, int ticketPrice) {
+    public Projection(Movie movie, Theater theater, LocalDateTime startDateAndTime, int ticketPrice) {
         this.movie = movie;
         this.theater = theater;
         this.startDateAndTime = startDateAndTime;
@@ -49,7 +49,7 @@ public class Projection {
         this.numberOfAvailableSeats = theater.getNumberOfSeats();
     }
 
-    public Projection(Movie movie, Theater theater, Date startDateAndTime, int ticketPrice, Boolean deleted) {
+    public Projection(Movie movie, Theater theater, LocalDateTime startDateAndTime, int ticketPrice, Boolean deleted) {
         this.movie = movie;
         this.theater = theater;
         this.startDateAndTime = startDateAndTime;
@@ -70,7 +70,7 @@ public class Projection {
         return theater;
     }
 
-    public Date getStartDateAndTime() {
+    public LocalDateTime getStartDateAndTime() {
         return startDateAndTime;
     }
 
@@ -86,24 +86,12 @@ public class Projection {
         return deleted;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
-    public void setTheater(Theater theater) {
-        this.theater = theater;
-    }
-
-    public void setStartDateAndTime(Date startDateAndTime) {
-        this.startDateAndTime = startDateAndTime;
-    }
-
-    public void setTicketPrice(int ticketPrice) {
-        this.ticketPrice = ticketPrice;
-    }
-
     public void setNumberOfAvailableSeats(int numberOfAvailableSeats) {
         this.numberOfAvailableSeats = numberOfAvailableSeats;
+    }
+
+    public LocalDateTime getEndDateAndTime() {
+        return this.getStartDateAndTime().plusMinutes(this.getMovie().getLength());
     }
 
     @Override

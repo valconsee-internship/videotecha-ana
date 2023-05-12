@@ -1,6 +1,8 @@
 package com.example.videotecha.dto;
 
-import java.util.Date;
+import com.example.videotecha.model.Projection;
+
+import java.time.LocalDateTime;
 
 public class ProjectionDto {
 
@@ -10,19 +12,31 @@ public class ProjectionDto {
 
     private TheaterDto theaterDto;
 
-    private Date startDateAndTime;
+    private LocalDateTime startDateAndTime;
 
     private int ticketPrice;
+
+    private int numberOfAvailableSeats;
 
     public ProjectionDto() {
     }
 
-    public ProjectionDto(Long id, MovieDto movieDto, TheaterDto theaterDto, Date startDateAndTime, int ticketPrice) {
+    public ProjectionDto(Long id, MovieDto movieDto, TheaterDto theaterDto, LocalDateTime startDateAndTime, int ticketPrice, int numberOfAvailableSeats) {
         this.id = id;
         this.movieDto = movieDto;
         this.theaterDto = theaterDto;
         this.startDateAndTime = startDateAndTime;
         this.ticketPrice = ticketPrice;
+        this.numberOfAvailableSeats = numberOfAvailableSeats;
+    }
+
+    public ProjectionDto(Projection projection) {
+        this.id = projection.getId();
+        this.movieDto = new MovieDto(projection.getMovie());
+        this.theaterDto = new TheaterDto(projection.getTheater());
+        this.startDateAndTime = projection.getStartDateAndTime();
+        this.ticketPrice = projection.getTicketPrice();
+        this.numberOfAvailableSeats = projection.getNumberOfAvailableSeats();
     }
 
     public Long getId() {
@@ -37,12 +51,16 @@ public class ProjectionDto {
         return theaterDto;
     }
 
-    public Date getStartDateAndTime() {
+    public LocalDateTime getStartDateAndTime() {
         return startDateAndTime;
     }
 
     public int getTicketPrice() {
         return ticketPrice;
+    }
+
+    public int getNumberOfAvailableSeats() {
+        return numberOfAvailableSeats;
     }
 
     @Override

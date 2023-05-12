@@ -2,6 +2,7 @@ package com.example.videotecha.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,7 +27,7 @@ public class Theater {
     @Column(nullable=false)
     private int numberOfSeats;
 
-    @OneToMany(mappedBy="theater")
+    @OneToMany(mappedBy="theater", fetch = FetchType.LAZY)
     private List<Projection> projections = new ArrayList<>();
 
     public Theater() {}
