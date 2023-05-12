@@ -2,6 +2,7 @@ package com.example.videotecha.service.impl;
 
 import com.example.videotecha.dto.ProjectionCreationDto;
 import com.example.videotecha.dto.ProjectionDto;
+import com.example.videotecha.mapper.ProjectionMapper;
 import com.example.videotecha.model.Projection;
 import com.example.videotecha.repository.ProjectionRepository;
 import com.example.videotecha.service.MovieService;
@@ -29,7 +30,7 @@ public class ProjectionServiceImpl implements ProjectionService {
 
     @Override
     @Transactional
-    public ProjectionDto create(ProjectionCreationDto projectionDto) {
+    public Projection create(ProjectionCreationDto projectionDto) {
         Projection newProjection = new Projection(
                 movieService.findById(projectionDto.getMovieId()),
                 theaterService.findById(projectionDto.getTheaterId()),
@@ -39,7 +40,35 @@ public class ProjectionServiceImpl implements ProjectionService {
         isOverlappingWithExistingProjection(newProjection);
 
         projectionRepository.save(newProjection);
-        return new ProjectionDto(newProjection);
+        return newProjection;
+    }
+
+    @Override
+    @Transactional
+    public Long delete(Long id) {
+        Projection projectionForDeleting = projectionRepository.findByIdAndDeletedFalse(id)
+                .orElseThrow(() -> new RuntimeException("There is no projection with this id."));
+
+        projectionRepository.deleteLogically(projectionForDeleting.getId());
+        return projectionForDeleting.getId();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Projection> findAllAvailableProjections() {
+        return projectionRepository.findAllAvailableProjections();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Projection> findAll() {
+        return projectionRepository.findAll();
+    }
+
+    @Override
+    public Projection findById(Long id) {
+        return projectionRepository.findByIdAndDeletedFalse(id)
+                .orElseThrow(() -> new RuntimeException("There is no projection with this id."));
     }
 
     private void isOverlappingWithExistingProjection(Projection newProjection) {
