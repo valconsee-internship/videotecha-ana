@@ -5,7 +5,6 @@ import com.example.videotecha.model.enums.Genre;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class MovieDto {
 

@@ -1,7 +1,6 @@
 package com.example.videotecha.service;
 
 import com.example.videotecha.dto.ProjectionCreationDto;
-import com.example.videotecha.dto.ProjectionDto;
 import com.example.videotecha.model.Projection;
 
 import java.util.List;

@@ -1,8 +1,6 @@
 package com.example.videotecha.service.impl;
 
 import com.example.videotecha.dto.ProjectionCreationDto;
-import com.example.videotecha.dto.ProjectionDto;
-import com.example.videotecha.mapper.ProjectionMapper;
 import com.example.videotecha.model.Projection;
 import com.example.videotecha.repository.ProjectionRepository;
 import com.example.videotecha.service.MovieService;
