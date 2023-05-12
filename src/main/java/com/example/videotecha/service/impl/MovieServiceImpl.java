@@ -43,6 +43,10 @@ public class MovieServiceImpl implements MovieService {
         Movie movieForDeleting = movieRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new RuntimeException("There is no movie with this id."));
 
+        if(!movieForDeleting.getProjections().isEmpty()) {
+            throw new RuntimeException("Cannot delete a movie that has an active projection.");
+        }
+
         movieRepository.deleteLogically(movieForDeleting.getId());
         return id;
     }
@@ -50,8 +54,11 @@ public class MovieServiceImpl implements MovieService {
     @Override
     @Transactional
     public Movie update(Movie movie) {
-        if(movieRepository.findByIdAndDeletedFalse(movie.getId()).isEmpty()) {
-                throw new RuntimeException("There is no movie with this id.");
+        Movie movieForUpdating = movieRepository.findByIdAndDeletedFalse(movie.getId())
+                .orElseThrow(() -> new RuntimeException("There is no movie with this id."));
+
+        if(!movieForUpdating.getProjections().isEmpty()) {
+            throw new RuntimeException("Cannot update a movie that has an active projection.");
         }
 
         return movieRepository.save(movie);
