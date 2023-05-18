@@ -11,7 +11,7 @@ public interface ProjectionService {
 
     Long delete(Long id);
 
-    List<Projection> findAllAvailableProjections();
+    List<Projection> findAllAvailable();
 
     List<Projection> findAll();
 

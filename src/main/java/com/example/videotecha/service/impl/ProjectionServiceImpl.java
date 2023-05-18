@@ -53,8 +53,8 @@ public class ProjectionServiceImpl implements ProjectionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Projection> findAllAvailableProjections() {
-        return projectionRepository.findAllAvailableProjections();
+    public List<Projection> findAllAvailable() {
+        return projectionRepository.findAllAvailable();
     }
 
     @Override
@@ -73,7 +73,6 @@ public class ProjectionServiceImpl implements ProjectionService {
         List<Projection> theaterProjections = projectionRepository.findByTheaterIdAndDeletedFalse(newProjection.getTheater().getId());
 
         for (Projection existingProjection : theaterProjections) {
-            // (StartA <= EndB) and (EndA >= StartB)
             if(newProjection.getStartDateAndTime().isBefore(existingProjection.getEndDateAndTime())
                     && newProjection.getEndDateAndTime().isAfter(existingProjection.getStartDateAndTime())) {
                 throw new RuntimeException("There is already a projection in this theater at this time.");

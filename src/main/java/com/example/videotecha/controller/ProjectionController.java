@@ -36,12 +36,12 @@ public class ProjectionController {
 
     @GetMapping("/available")
     public List<ProjectionDto> findAllAvailableProjections() {
-        return ProjectionMapper.projectionsToProjectionDto(projectionService.findAllAvailableProjections());
+        return ProjectionMapper.projectionsToProjectionDtos(projectionService.findAllAvailable());
     }
 
     @GetMapping
     public List<ProjectionDto> findAll() {
-        return ProjectionMapper.projectionsToProjectionDto(projectionService.findAll());
+        return ProjectionMapper.projectionsToProjectionDtos(projectionService.findAll());
     }
 
     @GetMapping("/{id}")
