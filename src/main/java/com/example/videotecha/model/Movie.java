@@ -11,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +19,7 @@ import java.util.List;
 public class Movie {
 
     @Id
-    @SequenceGenerator(name = "movieSequenceGenerator", sequenceName = "movieSequenceGenerator", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movieSequenceGenerator")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
 

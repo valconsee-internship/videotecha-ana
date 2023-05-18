@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
 
 import java.time.LocalDateTime;
 
@@ -15,8 +14,7 @@ import java.time.LocalDateTime;
 public class Projection {
 
     @Id
-    @SequenceGenerator(name = "projectionSequenceGenerator", sequenceName = "projectionSequenceGenerator", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "projectionSequenceGenerator")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
 
