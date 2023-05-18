@@ -1,12 +1,14 @@
 package com.example.videotecha.dto;
 
+import com.example.videotecha.model.Movie;
 import com.example.videotecha.model.enums.Genre;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class MovieDto {
+
+    private Long id;
 
     private String name;
 
@@ -26,6 +28,15 @@ public class MovieDto {
         this.genres = genres;
         this.length = length;
         this.description = description;
+    }
+
+    public MovieDto(Movie movie) {
+        this.id = movie.getId();
+        this.name = movie.getName();
+        this.director = movie.getDirector();
+        this.genres = movie.getGenres();
+        this.length = movie.getLength();
+        this.description = movie.getDescription();
     }
 
     public String getName() {
@@ -58,4 +69,5 @@ public class MovieDto {
                 ", description='" + description + '\'' +
                 '}';
     }
+
 }

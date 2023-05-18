@@ -10,7 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.OneToMany;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +19,7 @@ import java.util.List;
 public class Movie {
 
     @Id
-    @SequenceGenerator(name = "movieSequenceGenerator", sequenceName = "movieSequenceGenerator", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movieSequenceGenerator")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
 
@@ -39,6 +38,9 @@ public class Movie {
 
     @Column(nullable=false)
     private String description;
+
+    @OneToMany(mappedBy="movie", fetch = FetchType.LAZY)
+    private List<Projection> projections = new ArrayList<>();
 
     private Boolean deleted = false;
 
@@ -87,6 +89,14 @@ public class Movie {
 
     public boolean getDeleted() {
         return deleted;
+    }
+
+    public List<Projection> getProjections() {
+        return projections;
+    }
+
+    public void setProjections(List<Projection> projections) {
+        this.projections = projections;
     }
 
     @Override

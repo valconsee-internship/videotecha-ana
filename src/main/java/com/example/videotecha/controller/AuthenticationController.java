@@ -1,9 +1,11 @@
 package com.example.videotecha.controller;
 
 import com.example.videotecha.dto.UserDto;
-import com.example.videotecha.model.User;
 import com.example.videotecha.service.AuthenticationService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("auth")
@@ -16,8 +18,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody UserDto user) {
-        return authenticationService.register(user);
+    public UserDto register(@RequestBody UserDto user) {
+        return new UserDto(authenticationService.register(user));
     }
 
 }

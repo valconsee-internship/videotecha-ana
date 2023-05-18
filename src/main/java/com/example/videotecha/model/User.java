@@ -8,16 +8,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "users")
+@Table(name="\"user\"")
 public class User {
 
     @Id
-    @SequenceGenerator(name = "userSequenceGenerator", sequenceName = "userSequenceGenerator", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSequenceGenerator")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
 

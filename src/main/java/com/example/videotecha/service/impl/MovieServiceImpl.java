@@ -1,13 +1,13 @@
 package com.example.videotecha.service.impl;
 
 import com.example.videotecha.model.Movie;
+import com.example.videotecha.model.Projection;
 import com.example.videotecha.repository.MovieRepository;
 import com.example.videotecha.service.MovieService;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -36,24 +36,41 @@ public class MovieServiceImpl implements MovieService {
     @Transactional(readOnly = true)
     public Movie findById(Long id) {
         return movieRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no movie with this id."));
+                .orElseThrow(() -> new RuntimeException("There is no movie with this id."));
     }
 
     @Override
     @Transactional
     public Long delete(Long id) {
         Movie movieForDeleting = movieRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no movie with this id."));
+                .orElseThrow(() -> new RuntimeException("There is no movie with this id."));
+
+        if(movieHasActiveProjections(movieForDeleting)) {
+            throw new RuntimeException("Cannot delete a movie that has an active projection.");
+        }
 
         movieRepository.deleteLogically(movieForDeleting.getId());
         return id;
     }
 
+    private boolean movieHasActiveProjections(Movie movie) {
+        return movie.getProjections()
+                .stream()
+                .anyMatch(p -> !p.getDeleted() && !hasProjectionPassed(p));
+    }
+
+    private boolean hasProjectionPassed(Projection projection) {
+        return projection.getEndDateAndTime().isBefore(LocalDateTime.now());
+    }
+
     @Override
     @Transactional
     public Movie update(Movie movie) {
-        if(movieRepository.findByIdAndDeletedFalse(movie.getId()).isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no movie with this id.");
+        Movie movieForUpdating = movieRepository.findByIdAndDeletedFalse(movie.getId())
+                .orElseThrow(() -> new RuntimeException("There is no movie with this id."));
+
+        if(movieHasActiveProjections(movieForUpdating)) {
+            throw new RuntimeException("Cannot update a movie that has an active projection.");
         }
 
         return movieRepository.save(movie);
@@ -62,7 +79,7 @@ public class MovieServiceImpl implements MovieService {
     private void assertMovieNotExists(Movie movie) {
         movieRepository.findByNameAndDeletedFalse(movie.getName())
                 .ifPresent(m -> {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This movie already exists.");
+                    throw new RuntimeException("This movie already exists.");
                 });
     }
 }

@@ -18,6 +18,8 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     Optional<Movie> findByNameAndDeletedFalse(String name);
 
     @Modifying
-    @Query("UPDATE Movie m SET m.deleted = true WHERE m.id = :id")
+    @Query("UPDATE Movie m " +
+            "SET m.deleted = true " +
+            "WHERE m.id = :id")
     void deleteLogically(@Param("id") Long id);
 }

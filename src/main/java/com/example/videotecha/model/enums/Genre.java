@@ -9,5 +9,7 @@ public enum Genre {
     ROMANCE,
     HORROR,
     ACTION,
-    ADVENTURE
+    ADVENTURE,
+    DRAMA,
+    FANTASY
 }
