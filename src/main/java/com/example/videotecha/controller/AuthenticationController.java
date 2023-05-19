@@ -1,5 +1,6 @@
 package com.example.videotecha.controller;
 
+import com.example.videotecha.dto.UserCreationDto;
 import com.example.videotecha.dto.UserDto;
 import com.example.videotecha.service.AuthenticationService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public UserDto register(@RequestBody UserDto user) {
+    public UserDto register(@RequestBody UserCreationDto user) {
         return new UserDto(authenticationService.register(user));
     }
 

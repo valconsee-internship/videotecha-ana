@@ -1,6 +1,8 @@
 package com.example.videotecha.controller;
 
+import com.example.videotecha.dto.MovieCreationDto;
 import com.example.videotecha.dto.MovieDto;
+import com.example.videotecha.dto.MovieForUpdateDto;
 import com.example.videotecha.mapper.MovieMapper;
 import com.example.videotecha.model.Movie;
 import com.example.videotecha.service.MovieService;
@@ -26,7 +28,7 @@ public class MovieController {
     }
 
     @PostMapping
-    public MovieDto create(@RequestBody MovieDto movieDto) {
+    public MovieDto create(@RequestBody MovieCreationDto movieDto) {
         Movie newMovie = movieService.save(MovieMapper.movieDtoToMovie(movieDto));
         return new MovieDto(newMovie);
     }
@@ -47,7 +49,7 @@ public class MovieController {
     }
 
     @PutMapping
-    public MovieDto update(@RequestBody Movie movie) {
+    public MovieDto update(@RequestBody MovieForUpdateDto movie) {
         return new MovieDto(movieService.update(movie));
     }
 

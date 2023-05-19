@@ -6,9 +6,7 @@ import com.example.videotecha.model.enums.Genre;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieDto {
-
-    private Long id;
+public class MovieCreationDto {
 
     private String name;
 
@@ -20,9 +18,9 @@ public class MovieDto {
 
     private String description;
 
-    public MovieDto() {}
+    public MovieCreationDto() {}
 
-    public MovieDto(String name, String director, List<Genre> genres, Integer length, String description) {
+    public MovieCreationDto(String name, String director, List<Genre> genres, Integer length, String description) {
         this.name = name;
         this.director = director;
         this.genres = genres;
@@ -30,17 +28,12 @@ public class MovieDto {
         this.description = description;
     }
 
-    public MovieDto(Movie movie) {
-        this.id = movie.getId();
+    public MovieCreationDto(Movie movie) {
         this.name = movie.getName();
         this.director = movie.getDirector();
         this.genres = movie.getGenres();
         this.length = movie.getLength();
         this.description = movie.getDescription();
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {
@@ -66,7 +59,6 @@ public class MovieDto {
     @Override
     public String toString() {
         return "MovieDto{" +
-                "id='" + id + '\'' +
                 "name='" + name + '\'' +
                 ", director='" + director + '\'' +
                 ", genres=" + genres +
