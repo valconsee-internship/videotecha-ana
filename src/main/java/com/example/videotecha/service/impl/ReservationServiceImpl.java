@@ -1,6 +1,9 @@
 package com.example.videotecha.service.impl;
 
 import com.example.videotecha.dto.ReservationCreationDto;
+import com.example.videotecha.exception.MaximumNumberOfTicketsReachedException;
+import com.example.videotecha.exception.ProjectionSoldOutException;
+import com.example.videotecha.exception.TooLateCancellationException;
 import com.example.videotecha.model.Projection;
 import com.example.videotecha.model.Reservation;
 import com.example.videotecha.model.User;
@@ -8,6 +11,7 @@ import com.example.videotecha.repository.ReservationRepository;
 import com.example.videotecha.service.ProjectionService;
 import com.example.videotecha.service.ReservationService;
 import com.example.videotecha.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +42,7 @@ public class ReservationServiceImpl implements ReservationService {
         Projection projection = projectionService.findById(reservationCreationDto.getProjectionId());
 
         if(projection.getNumberOfAvailableSeats() - reservationCreationDto.getNumberOfTickets() < 0) {
-            throw new RuntimeException("Not enough tickets available for this projection.");
+            throw new ProjectionSoldOutException("Not enough tickets available for this projection.");
         }
 
         User user = userService.findById(reservationCreationDto.getUserId());
@@ -59,7 +63,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional
     public Long cancel(Long id) {
         Reservation reservation = reservationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("There is no reservation with this id."));
+                .orElseThrow(() -> new EntityNotFoundException("There is no reservation with this id."));
 
         canReservationBeCanceled(reservation.getProjection().getStartDateAndTime());
 
@@ -80,7 +84,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional(readOnly = true)
     public Reservation findById(Long id) {
         return reservationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("There is no reservation with this id."));
+                .orElseThrow(() -> new EntityNotFoundException("There is no reservation with this id."));
     }
 
     private void canReservationBeCanceled(LocalDateTime projectionStartTime) {
@@ -88,7 +92,7 @@ public class ReservationServiceImpl implements ReservationService {
                 && LocalDateTime.now().isBefore(projectionStartTime);
 
         if(isProjectionIn2HoursOrLess) {
-            throw new RuntimeException("Cannot cancel reservation less than two hours before projection.");
+            throw new TooLateCancellationException("Cannot cancel reservation less than two hours before projection.");
         }
     }
 
@@ -100,7 +104,7 @@ public class ReservationServiceImpl implements ReservationService {
         int numberOfNewTickets = reservationCreationDto.getNumberOfTickets();
 
         if(reservedNumberOfTickets + numberOfNewTickets > 5) {
-            throw new RuntimeException("This user reached maximum number of reservations for this projection.");
+            throw new MaximumNumberOfTicketsReachedException("This user reached maximum number of reservations for this projection.");
         }
     }
 

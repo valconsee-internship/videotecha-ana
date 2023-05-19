@@ -1,10 +1,13 @@
 package com.example.videotecha.service.impl;
 
 import com.example.videotecha.dto.MovieForUpdateDto;
+import com.example.videotecha.exception.MovieHasActiveProjectionException;
+import com.example.videotecha.exception.ObjectAlreadyExistsException;
 import com.example.videotecha.model.Movie;
 import com.example.videotecha.model.Projection;
 import com.example.videotecha.repository.MovieRepository;
 import com.example.videotecha.service.MovieService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,17 +40,17 @@ public class MovieServiceImpl implements MovieService {
     @Transactional(readOnly = true)
     public Movie findById(Long id) {
         return movieRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(() -> new RuntimeException("There is no movie with this id."));
+                .orElseThrow(() -> new EntityNotFoundException("There is no movie with this id."));
     }
 
     @Override
     @Transactional
     public Long delete(Long id) {
         Movie movieForDeleting = movieRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(() -> new RuntimeException("There is no movie with this id."));
+                .orElseThrow(() -> new EntityNotFoundException("There is no movie with this id."));
 
         if(movieHasActiveProjections(movieForDeleting)) {
-            throw new RuntimeException("Cannot delete a movie that has an active projection.");
+            throw new MovieHasActiveProjectionException("Cannot delete a movie that has an active projection.");
         }
 
         movieRepository.deleteLogically(movieForDeleting.getId());
@@ -70,10 +73,10 @@ public class MovieServiceImpl implements MovieService {
     @Transactional
     public Movie update(MovieForUpdateDto movie) {
         Movie movieForUpdating = movieRepository.findByIdAndDeletedFalse(movie.getId())
-                .orElseThrow(() -> new RuntimeException("There is no movie with this id."));
+                .orElseThrow(() -> new EntityNotFoundException("There is no movie with this id."));
 
         if(movieHasActiveProjections(movieForUpdating)) {
-            throw new RuntimeException("Cannot update a movie that has an active projection.");
+            throw new MovieHasActiveProjectionException("Cannot update a movie that has an active projection.");
         }
 
         movieForUpdating.setName(movie.getName());
@@ -88,7 +91,7 @@ public class MovieServiceImpl implements MovieService {
     private void assertMovieNotExists(Movie movie) {
         movieRepository.findByNameAndDeletedFalse(movie.getName())
                 .ifPresent(m -> {
-                    throw new RuntimeException("This movie already exists.");
+                    throw new ObjectAlreadyExistsException("This movie already exists.");
                 });
     }
 }
