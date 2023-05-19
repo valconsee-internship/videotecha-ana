@@ -13,32 +13,39 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository registeredUserRepository;
+    private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository registeredUserRepository) {
-        this.registeredUserRepository = registeredUserRepository;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<User> findAllUsers() {
-        return registeredUserRepository.findAll();
+        return userRepository.findAll();
     }
 
     @Override
     @Transactional
     public User save(UserDto user) {
         validateUser(user);
-        return registeredUserRepository.save(UserMapper.userDtoToUser(user));
+        return userRepository.save(UserMapper.userDtoToUser(user));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("There is no user with this id."));
     }
 
     private void validateUser(UserDto user) {
-        registeredUserRepository.findByEmail(user.getEmail())
+        userRepository.findByEmail(user.getEmail())
                 .ifPresent(u -> {
                     throw new RuntimeException("User with this username already exists");
                 });
 
-        registeredUserRepository.findByUsername(user.getUsername())
+        userRepository.findByUsername(user.getUsername())
                 .ifPresent(u -> {
                     throw new RuntimeException("User with this email already exists");
                 });

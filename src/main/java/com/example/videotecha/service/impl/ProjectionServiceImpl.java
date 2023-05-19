@@ -9,6 +9,7 @@ import com.example.videotecha.service.TheaterService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -29,6 +30,10 @@ public class ProjectionServiceImpl implements ProjectionService {
     @Override
     @Transactional
     public Projection create(ProjectionCreationDto projectionDto) {
+        if(projectionDto.getStartDateAndTime().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Cannot create projection in the past.");
+        }
+
         Projection newProjection = new Projection(
                 movieService.findById(projectionDto.getMovieId()),
                 theaterService.findById(projectionDto.getTheaterId()),

@@ -8,6 +8,9 @@ import java.util.List;
 
 public final class ProjectionMapper {
 
+    private ProjectionMapper() {
+    }
+
     public static List<ProjectionDto> projectionsToProjectionDtos(List<Projection> projections) {
         List<ProjectionDto> projectionDtos = new ArrayList<>();
 
