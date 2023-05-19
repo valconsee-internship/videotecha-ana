@@ -49,6 +49,10 @@ public class Reservation {
         return canceled;
     }
 
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
+    }
+
     @Override
     public String toString() {
         return "Reservation{" +

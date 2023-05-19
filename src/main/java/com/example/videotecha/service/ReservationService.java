@@ -9,4 +9,10 @@ public interface ReservationService {
 
     List<Reservation> create(ReservationCreationDto reservationCreationDto);
 
+    Long cancel(Long id);
+
+    List<Reservation> findAllActive();
+
+    Reservation findById(Long id);
+
 }

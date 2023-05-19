@@ -11,6 +11,7 @@ import com.example.videotecha.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +55,38 @@ public class ReservationServiceImpl implements ReservationService {
         return newReservations;
     }
 
+    @Override
+    @Transactional
+    public Long cancel(Long id) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("There is no reservation with this id."));
+
+        canReservationBeCanceled(reservation.getProjection().getStartDateAndTime());
+
+        reservation.setCanceled(true);
+        reservation.getProjection().setNumberOfAvailableSeats(reservation.getProjection().getNumberOfAvailableSeats() + 1);
+        reservationRepository.save(reservation);
+
+        return id;
+    }
+
+    @Override
+    public List<Reservation> findAllActive() {
+        return reservationRepository.findAllByCanceledFalse();
+    }
+
+    @Override
+    public Reservation findById(Long id) {
+        return reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("There is no reservation with this id."));
+    }
+
+    private void canReservationBeCanceled(LocalDateTime projectionStartTime) {
+        if(LocalDateTime.now().isAfter(projectionStartTime.minusHours(2)) && LocalDateTime.now().isBefore(projectionStartTime)) {
+            throw new RuntimeException("Cannot cancel reservation less than two hours before projection.");
+        }
+    }
+
     private void isMaximumNumberOfReservationsForUserReached(ReservationCreationDto reservationCreationDto) {
         if(reservationRepository.findNumberOfReservationsByUserIdAndProjectionId(
                 reservationCreationDto.getProjectionId(),
@@ -61,4 +94,5 @@ public class ReservationServiceImpl implements ReservationService {
             throw new RuntimeException("This user reached maximum number of reservations for this projection.");
         }
     }
+    
 }
