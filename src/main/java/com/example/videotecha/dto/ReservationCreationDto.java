@@ -11,12 +11,6 @@ public class ReservationCreationDto {
     public ReservationCreationDto() {
     }
 
-    public ReservationCreationDto(Long projectionId, Long userId, int numberOfTickets) {
-        this.projectionId = projectionId;
-        this.userId = userId;
-        this.numberOfTickets = numberOfTickets;
-    }
-
     public Long getProjectionId() {
         return projectionId;
     }

@@ -39,7 +39,7 @@ public class Projection {
     @Column(nullable=false)
     private int numberOfAvailableSeats;
 
-    private boolean deleted = false;
+    private boolean deleted;
 
     @OneToMany(mappedBy="projection", fetch = FetchType.LAZY)
     private List<Reservation> reservations = new ArrayList<>();

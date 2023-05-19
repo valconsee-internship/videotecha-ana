@@ -46,11 +46,11 @@ public class ReservationServiceImpl implements ReservationService {
         List<Reservation> newReservations = new ArrayList<>();
         for(int i=0; i < reservationCreationDto.getNumberOfTickets(); i++) {
             Reservation reservation = new Reservation(user, projection);
-            projection.setNumberOfAvailableSeats(projection.getNumberOfAvailableSeats() - 1);
-
             newReservations.add(reservation);
             reservationRepository.save(reservation);
         }
+
+        projection.setNumberOfAvailableSeats(projection.getNumberOfAvailableSeats() - reservationCreationDto.getNumberOfTickets());
 
         return newReservations;
     }
@@ -71,28 +71,37 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Reservation> findAllActive() {
         return reservationRepository.findAllByCanceledFalse();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Reservation findById(Long id) {
         return reservationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("There is no reservation with this id."));
     }
 
     private void canReservationBeCanceled(LocalDateTime projectionStartTime) {
-        if(LocalDateTime.now().isAfter(projectionStartTime.minusHours(2)) && LocalDateTime.now().isBefore(projectionStartTime)) {
+        boolean isProjectionIn2HoursOrLess = LocalDateTime.now().isAfter(projectionStartTime.minusHours(2))
+                && LocalDateTime.now().isBefore(projectionStartTime);
+
+        if(isProjectionIn2HoursOrLess) {
             throw new RuntimeException("Cannot cancel reservation less than two hours before projection.");
         }
     }
 
     private void isMaximumNumberOfReservationsForUserReached(ReservationCreationDto reservationCreationDto) {
-        if(reservationRepository.findNumberOfReservationsByUserIdAndProjectionId(
-                reservationCreationDto.getProjectionId(),
-                reservationCreationDto.getUserId()) + reservationCreationDto.getNumberOfTickets() > 5) {
+        int reservedNumberOfTickets = reservationRepository.countByUserIdAndProjectionId(
+                reservationCreationDto.getUserId(),
+                reservationCreationDto.getProjectionId());
+
+        int numberOfNewTickets = reservationCreationDto.getNumberOfTickets();
+
+        if(reservedNumberOfTickets + numberOfNewTickets > 5) {
             throw new RuntimeException("This user reached maximum number of reservations for this projection.");
         }
     }
-    
+
 }

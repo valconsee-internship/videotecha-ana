@@ -9,8 +9,15 @@ create table movie (
 );
 
 create table movie_genres (
-    movie_id bigserial not null,
+    movie_id bigserial not null references movie,
     genres varchar(255)
+);
+
+create table theater (
+    id bigserial not null,
+    name varchar(255) not null,
+    number_of_seats integer not null,
+    primary key (id)
 );
 
 create table projection (
@@ -19,15 +26,8 @@ create table projection (
     number_of_available_seats integer not null,
     start_date_and_time timestamp(6) not null,
     ticket_price integer not null,
-    movie_id bigserial not null,
-    theater_id bigserial not null,
-    primary key (id)
-);
-
-create table theater (
-    id bigserial not null,
-    name varchar(255) not null,
-    number_of_seats integer not null,
+    movie_id bigserial not null references movie,
+    theater_id bigserial not null references theater,
     primary key (id)
 );
 
@@ -41,18 +41,3 @@ create table "user" (
     username varchar(255) not null unique,
     primary key (id)
 );
-
-alter table if exists movie_genres
-    add constraint fk_movie_id
-    foreign key (movie_id)
-    references movie;
-
-alter table if exists projection
-    add constraint fk_movie_id
-    foreign key (movie_id)
-    references movie;
-
-alter table if exists projection
-    add constraint fk_theater_id
-    foreign key (theater_id)
-    references theater;

@@ -23,7 +23,7 @@ public class Reservation {
     @JoinColumn(name="projection_id", nullable=false)
     private Projection projection;
 
-    private boolean canceled = false;
+    private boolean canceled;
 
     public Reservation() {
     }

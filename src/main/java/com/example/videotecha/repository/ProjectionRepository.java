@@ -16,14 +16,18 @@ public interface ProjectionRepository extends JpaRepository<Projection, Long> {
     Optional<Projection> findByIdAndDeletedFalse(Long id);
 
     @Modifying
-    @Query("UPDATE Projection p " +
-            "SET p.deleted = true " +
-            "WHERE p.id = :id")
+    @Query("""
+            UPDATE Projection p
+            SET p.deleted = true
+            WHERE p.id = :id
+            """)
     void deleteLogically(@Param("id") Long id);
 
-    @Query("SELECT p " +
-            "FROM Projection p " +
-            "WHERE p.deleted = False and p.numberOfAvailableSeats > 0")
+    @Query("""
+            SELECT p
+            FROM Projection p
+            WHERE p.deleted = False and p.numberOfAvailableSeats > 0
+            """)
     List<Projection> findAllAvailable();
 
 }

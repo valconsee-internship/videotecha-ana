@@ -42,7 +42,7 @@ public class Movie {
     @OneToMany(mappedBy="movie", fetch = FetchType.LAZY)
     private List<Projection> projections = new ArrayList<>();
 
-    private boolean deleted = false;
+    private boolean deleted;
 
     public Movie() {}
 
