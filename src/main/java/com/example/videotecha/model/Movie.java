@@ -42,7 +42,7 @@ public class Movie {
     @OneToMany(mappedBy="movie", fetch = FetchType.LAZY)
     private List<Projection> projections = new ArrayList<>();
 
-    private Boolean deleted = false;
+    private boolean deleted = false;
 
     public Movie() {}
 
@@ -54,7 +54,7 @@ public class Movie {
         this.description = description;
     }
 
-    public Movie(String name, String director, List<Genre> genres, Integer length, String description, Boolean isDeleted) {
+    public Movie(String name, String director, List<Genre> genres, Integer length, String description, boolean isDeleted) {
         this.name = name;
         this.director = director;
         this.genres = genres;

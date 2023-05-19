@@ -2,13 +2,17 @@ package com.example.videotecha.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Projection {
@@ -35,7 +39,10 @@ public class Projection {
     @Column(nullable=false)
     private int numberOfAvailableSeats;
 
-    private Boolean deleted = false;
+    private boolean deleted = false;
+
+    @OneToMany(mappedBy="projection", fetch = FetchType.LAZY)
+    private List<Reservation> reservations = new ArrayList<>();
 
     public Projection() {}
 
@@ -47,7 +54,7 @@ public class Projection {
         this.numberOfAvailableSeats = theater.getNumberOfSeats();
     }
 
-    public Projection(Movie movie, Theater theater, LocalDateTime startDateAndTime, int ticketPrice, Boolean deleted) {
+    public Projection(Movie movie, Theater theater, LocalDateTime startDateAndTime, int ticketPrice, boolean deleted) {
         this.movie = movie;
         this.theater = theater;
         this.startDateAndTime = startDateAndTime;
@@ -80,8 +87,12 @@ public class Projection {
         return numberOfAvailableSeats;
     }
 
-    public Boolean getDeleted() {
+    public boolean getDeleted() {
         return deleted;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 
     public void setNumberOfAvailableSeats(int numberOfAvailableSeats) {

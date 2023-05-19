@@ -60,7 +60,9 @@ public class MovieServiceImpl implements MovieService {
     }
 
     private boolean hasProjectionPassed(Projection projection) {
-        return projection.getEndDateAndTime().isBefore(LocalDateTime.now());
+        return projection.getEndDateAndTime().isBefore(LocalDateTime.now())
+                || (projection.getStartDateAndTime().isBefore(LocalDateTime.now())
+                    && projection.getEndDateAndTime().isAfter(LocalDateTime.now()));
     }
 
     @Override

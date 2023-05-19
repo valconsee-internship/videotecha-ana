@@ -19,8 +19,8 @@ create table projection (
     number_of_available_seats integer not null,
     start_date_and_time timestamp(6) not null,
     ticket_price integer not null,
-    movie_id bigint not null,
-    theater_id bigint not null,
+    movie_id bigserial not null,
+    theater_id bigserial not null,
     primary key (id)
 );
 
