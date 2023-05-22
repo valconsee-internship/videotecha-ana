@@ -1,13 +1,13 @@
 package com.example.videotecha.service.impl;
 
 import com.example.videotecha.dto.MovieForUpdateDto;
+import com.example.videotecha.exception.EntityNotFoundException;
 import com.example.videotecha.exception.MovieHasActiveProjectionException;
 import com.example.videotecha.exception.ObjectAlreadyExistsException;
 import com.example.videotecha.model.Movie;
 import com.example.videotecha.model.Projection;
 import com.example.videotecha.repository.MovieRepository;
 import com.example.videotecha.service.MovieService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

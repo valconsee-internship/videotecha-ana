@@ -1,6 +1,7 @@
 package com.example.videotecha.service.impl;
 
 import com.example.videotecha.dto.ReservationCreationDto;
+import com.example.videotecha.exception.EntityNotFoundException;
 import com.example.videotecha.exception.MaximumNumberOfTicketsReachedException;
 import com.example.videotecha.exception.ProjectionSoldOutException;
 import com.example.videotecha.exception.TooLateCancellationException;
@@ -11,7 +12,6 @@ import com.example.videotecha.repository.ReservationRepository;
 import com.example.videotecha.service.ProjectionService;
 import com.example.videotecha.service.ReservationService;
 import com.example.videotecha.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

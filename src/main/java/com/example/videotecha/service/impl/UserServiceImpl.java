@@ -1,12 +1,12 @@
 package com.example.videotecha.service.impl;
 
 import com.example.videotecha.dto.UserCreationDto;
+import com.example.videotecha.exception.EntityNotFoundException;
 import com.example.videotecha.exception.ObjectAlreadyExistsException;
 import com.example.videotecha.mapper.UserMapper;
 import com.example.videotecha.model.User;
 import com.example.videotecha.repository.UserRepository;
 import com.example.videotecha.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
