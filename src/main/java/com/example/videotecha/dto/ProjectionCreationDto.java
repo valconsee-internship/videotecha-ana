@@ -3,6 +3,8 @@ package com.example.videotecha.dto;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +20,7 @@ public class ProjectionCreationDto {
     @Future(message = "Start date and time must be in the future.")
     private LocalDateTime startDateAndTime;
 
-    @Min(value = 0, message = "Ticket price cannot be negative.")
+    @PositiveOrZero(message = "Ticket price cannot be negative.")
     private int ticketPrice;
 
     public ProjectionCreationDto() {

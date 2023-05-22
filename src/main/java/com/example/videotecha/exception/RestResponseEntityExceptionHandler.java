@@ -1,7 +1,6 @@
 package com.example.videotecha.exception;
 
 import com.example.videotecha.dto.ErrorDto;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,7 +21,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    protected ErrorDto handleNotFoundException(EntityNotFoundException e) {
+    protected ErrorDto handleNotFoundException(RuntimeException e) {
         return new ErrorDto(e.getMessage(), HttpStatus.NOT_FOUND, new Timestamp(System.currentTimeMillis()));
     }
 

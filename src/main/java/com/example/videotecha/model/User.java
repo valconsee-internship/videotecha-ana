@@ -11,6 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +28,28 @@ public class User {
     private Long id;
 
     @Column(nullable=false)
+    @NotBlank(message = "First name is mandatory.")
     private String firstName;
 
     @Column(nullable=false)
+    @NotBlank(message = "Last name is mandatory.")
     private String lastName;
 
     @Column(unique=true, nullable=false)
+    @Email(message = "Wrong email format.")
+    @NotNull(message = "Email is mandatory.")
     private String email;
 
     @Column(unique=true, nullable=false)
+    @NotBlank(message = "Username is mandatory.")
     private String username;
 
     @Column(nullable=false)
+    @NotBlank(message = "Password is mandatory.")
     private String password;
 
     @Enumerated(value = EnumType.STRING)
+    @NotNull(message = "Role is mandatory.")
     private UserRole role;
 
     @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
