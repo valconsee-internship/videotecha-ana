@@ -2,7 +2,6 @@ package com.example.videotecha.dto;
 
 import com.example.videotecha.model.Movie;
 import com.example.videotecha.model.enums.Genre;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
