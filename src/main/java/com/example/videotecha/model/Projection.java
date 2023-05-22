@@ -9,8 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,20 +24,16 @@ public class Projection {
 
     @ManyToOne
     @JoinColumn(name="movie_id", nullable=false)
-    @NotNull(message = "Movie is mandatory.")
     private Movie movie;
 
     @ManyToOne
     @JoinColumn(name="theater_id", nullable=false)
-    @NotNull(message = "Movie is mandatory.")
     private Theater theater;
 
     @Column(nullable=false)
-    @NotNull(message = "Start date and time is mandatory.")
     private LocalDateTime startDateAndTime;
 
     @Column(nullable=false)
-    @PositiveOrZero(message = "Ticket price cannot be negative.")
     private int ticketPrice;
 
     @Column(nullable=false)

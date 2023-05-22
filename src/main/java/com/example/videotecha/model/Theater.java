@@ -7,8 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +20,9 @@ public class Theater {
     private Long id;
 
     @Column(nullable=false)
-    @NotBlank(message = "Name is mandatory.")
     private String name;
 
     @Column(nullable=false)
-    @Positive(message = "Number of seats should be positive number.")
     private int numberOfSeats;
 
     @OneToMany(mappedBy="theater", fetch = FetchType.LAZY)

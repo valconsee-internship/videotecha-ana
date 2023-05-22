@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Reservation {
@@ -18,12 +17,10 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
-    @NotNull(message = "User is mandatory.")
     private User user;
 
     @ManyToOne
     @JoinColumn(name="projection_id", nullable=false)
-    @NotNull(message = "Projection is mandatory.")
     private Projection projection;
 
     private boolean canceled;

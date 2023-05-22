@@ -11,10 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,25 +24,19 @@ public class Movie {
     private Long id;
 
     @Column(nullable=false)
-    @NotBlank(message = "Name is mandatory.")
     private String name;
 
     @Column(nullable=false)
-    @NotBlank(message = "Director is mandatory.")
     private String director;
 
     @Enumerated(value = EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
-    @NotEmpty(message = "At least one genre is mandatory.")
     private List<Genre> genres = new ArrayList<>();
 
     @Column(nullable=false)
-    @NotNull(message = "Length is mandatory.")
-    @Positive(message = "Length cannot be negative.")
     private Integer length;
 
     @Column(nullable=false)
-    @NotBlank(message = "Description is mandatory.")
     private String description;
 
     @OneToMany(mappedBy="movie", fetch = FetchType.LAZY)
