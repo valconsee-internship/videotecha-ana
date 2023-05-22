@@ -4,6 +4,7 @@ import com.example.videotecha.dto.ReservationCreationDto;
 import com.example.videotecha.dto.ReservationDto;
 import com.example.videotecha.mapper.ReservationMapper;
 import com.example.videotecha.service.ReservationService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public List<ReservationDto> create(@RequestBody ReservationCreationDto reservationCreationDto) {
+    public List<ReservationDto> create(@Valid @RequestBody ReservationCreationDto reservationCreationDto) {
         return ReservationMapper.reservationsToReservationDtos(reservationService.create(reservationCreationDto));
     }
 

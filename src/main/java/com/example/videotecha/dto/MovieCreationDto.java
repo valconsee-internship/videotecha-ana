@@ -2,20 +2,30 @@ package com.example.videotecha.dto;
 
 import com.example.videotecha.model.Movie;
 import com.example.videotecha.model.enums.Genre;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MovieCreationDto {
 
+    @NotBlank(message = "Name is mandatory.")
     private String name;
 
+    @NotBlank(message = "Director is mandatory.")
     private String director;
 
+    @NotEmpty(message = "At least one genre is mandatory.")
     private List<Genre> genres = new ArrayList<>();
 
+    @NotNull(message = "Length is mandatory.")
+    @Min(value = 0, message = "Length cannot be negative.")
     private Integer length;
 
+    @NotBlank(message = "Description is mandatory.")
     private String description;
 
     public MovieCreationDto() {}

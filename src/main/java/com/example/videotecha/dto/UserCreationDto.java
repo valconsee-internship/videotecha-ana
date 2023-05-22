@@ -2,13 +2,29 @@ package com.example.videotecha.dto;
 
 import com.example.videotecha.model.User;
 import com.example.videotecha.model.enums.UserRole;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class UserCreationDto {
+
+    @NotBlank(message = "First name is mandatory.")
     private String firstName;
+
+    @NotBlank(message = "Projection id is mandatory.")
     private String lastName;
+
+    @NotNull(message = "Email is mandatory.")
+    @Email(message = "Wrong email format.")
     private String email;
+
+    @NotBlank(message = "Username is mandatory.")
     private String username;
+
+    @NotBlank(message = "Password is mandatory.")
     private String password;
+
+    @NotNull(message = "Role is mandatory.")
     private UserRole role;
 
     public UserCreationDto() {}

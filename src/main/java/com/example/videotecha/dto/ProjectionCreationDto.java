@@ -1,32 +1,34 @@
 package com.example.videotecha.dto;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
 public class ProjectionCreationDto {
 
-    private Long id;
-
+    @NotNull(message = "Movie id is mandatory.")
     private Long movieId;
 
+    @NotNull(message = "Theater id is mandatory.")
     private Long theaterId;
 
+    @NotNull(message = "Start date and time is mandatory.")
+    @Future(message = "Start date and time must be in the future.")
     private LocalDateTime startDateAndTime;
 
+    @Min(value = 0, message = "Ticket price cannot be negative.")
     private int ticketPrice;
 
     public ProjectionCreationDto() {
     }
 
-    public ProjectionCreationDto(Long id, Long movieId, Long theaterId, LocalDateTime startDateAndTime, int ticketPrice) {
-        this.id = id;
+    public ProjectionCreationDto(Long movieId, Long theaterId, LocalDateTime startDateAndTime, int ticketPrice) {
         this.movieId = movieId;
         this.theaterId = theaterId;
         this.startDateAndTime = startDateAndTime;
         this.ticketPrice = ticketPrice;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Long getMovieId() {
@@ -48,7 +50,6 @@ public class ProjectionCreationDto {
     @Override
     public String toString() {
         return "ProjectionDto{" +
-                "id=" + id +
                 ", movieId=" + movieId +
                 ", theaterId=" + theaterId +
                 ", startDateAndTime=" + startDateAndTime +

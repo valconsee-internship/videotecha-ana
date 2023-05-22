@@ -6,6 +6,7 @@ import com.example.videotecha.dto.MovieForUpdateDto;
 import com.example.videotecha.mapper.MovieMapper;
 import com.example.videotecha.model.Movie;
 import com.example.videotecha.service.MovieService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ public class MovieController {
     }
 
     @PostMapping
-    public MovieDto create(@RequestBody MovieCreationDto movieDto) {
+    public MovieDto create(@Valid @RequestBody MovieCreationDto movieDto) {
         Movie newMovie = movieService.save(MovieMapper.movieDtoToMovie(movieDto));
         return new MovieDto(newMovie);
     }
@@ -49,7 +50,7 @@ public class MovieController {
     }
 
     @PutMapping
-    public MovieDto update(@RequestBody MovieForUpdateDto movie) {
+    public MovieDto update(@Valid @RequestBody MovieForUpdateDto movie) {
         return new MovieDto(movieService.update(movie));
     }
 
