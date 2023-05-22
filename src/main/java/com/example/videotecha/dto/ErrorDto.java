@@ -2,18 +2,18 @@ package com.example.videotecha.dto;
 
 import org.springframework.http.HttpStatus;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class ErrorDto {
 
     private String message;
     private HttpStatus httpStatus;
-    private Timestamp timestamp;
+    private LocalDateTime timestamp;
 
     public ErrorDto() {
     }
 
-    public ErrorDto(String message, HttpStatus httpStatus, Timestamp timestamp) {
+    public ErrorDto(String message, HttpStatus httpStatus, LocalDateTime timestamp) {
         this.message = message;
         this.httpStatus = httpStatus;
         this.timestamp = timestamp;
@@ -27,7 +27,7 @@ public class ErrorDto {
         return httpStatus;
     }
 
-    public Timestamp getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
