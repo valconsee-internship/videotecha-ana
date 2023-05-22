@@ -1,8 +1,8 @@
 package com.example.videotecha.service.impl;
 
 import com.example.videotecha.dto.MovieForUpdateDto;
+import com.example.videotecha.exception.BusinessLogicException;
 import com.example.videotecha.exception.EntityNotFoundException;
-import com.example.videotecha.exception.MovieHasActiveProjectionException;
 import com.example.videotecha.exception.ObjectAlreadyExistsException;
 import com.example.videotecha.model.Movie;
 import com.example.videotecha.model.Projection;
@@ -50,7 +50,7 @@ public class MovieServiceImpl implements MovieService {
                 .orElseThrow(() -> new EntityNotFoundException("There is no movie with this id."));
 
         if(movieHasActiveProjections(movieForDeleting)) {
-            throw new MovieHasActiveProjectionException("Cannot delete a movie that has an active projection.");
+            throw new BusinessLogicException("Cannot delete a movie that has an active projection.");
         }
 
         movieRepository.deleteLogically(movieForDeleting.getId());
@@ -76,7 +76,7 @@ public class MovieServiceImpl implements MovieService {
                 .orElseThrow(() -> new EntityNotFoundException("There is no movie with this id."));
 
         if(movieHasActiveProjections(movieForUpdating)) {
-            throw new MovieHasActiveProjectionException("Cannot update a movie that has an active projection.");
+            throw new BusinessLogicException("Cannot update a movie that has an active projection.");
         }
 
         movieForUpdating.setName(movie.getName());
