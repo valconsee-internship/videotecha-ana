@@ -1,5 +1,6 @@
 package com.example.videotecha.mapper;
 
+import com.example.videotecha.dto.UserCreationDto;
 import com.example.videotecha.dto.UserDto;
 import com.example.videotecha.model.User;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 public final class UserMapper {
 
-    public static User userDtoToUser(UserDto user) {
+    public static User userCreationDtoToUser(UserCreationDto user) {
         return new User(
                 user.getFirstName(),
                 user.getLastName(),

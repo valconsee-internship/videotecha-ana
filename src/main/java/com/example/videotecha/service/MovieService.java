@@ -1,5 +1,6 @@
 package com.example.videotecha.service;
 
+import com.example.videotecha.dto.MovieForUpdateDto;
 import com.example.videotecha.model.Movie;
 
 import java.util.List;
@@ -14,6 +15,6 @@ public interface MovieService {
 
     Long delete(Long id);
 
-    Movie update(Movie movie);
+    Movie update(MovieForUpdateDto movie);
 
 }

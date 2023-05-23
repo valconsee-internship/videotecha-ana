@@ -1,6 +1,8 @@
 package com.example.videotecha.service.impl;
 
-import com.example.videotecha.dto.UserDto;
+import com.example.videotecha.dto.UserCreationDto;
+import com.example.videotecha.exception.EntityNotFoundException;
+import com.example.videotecha.exception.ObjectAlreadyExistsException;
 import com.example.videotecha.mapper.UserMapper;
 import com.example.videotecha.model.User;
 import com.example.videotecha.repository.UserRepository;
@@ -27,27 +29,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User save(UserDto user) {
+    public User save(UserCreationDto user) {
         validateUser(user);
-        return userRepository.save(UserMapper.userDtoToUser(user));
+        return userRepository.save(UserMapper.userCreationDtoToUser(user));
     }
 
     @Override
     @Transactional(readOnly = true)
     public User findById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("There is no user with this id."));
+                .orElseThrow(() -> new EntityNotFoundException("There is no user with this id."));
     }
 
-    private void validateUser(UserDto user) {
+    private void validateUser(UserCreationDto user) {
         userRepository.findByEmail(user.getEmail())
                 .ifPresent(u -> {
-                    throw new RuntimeException("User with this username already exists");
+                    throw new ObjectAlreadyExistsException("User with this username already exists");
                 });
 
         userRepository.findByUsername(user.getUsername())
                 .ifPresent(u -> {
-                    throw new RuntimeException("User with this email already exists");
+                    throw new ObjectAlreadyExistsException("User with this email already exists");
                 });
     }
 }

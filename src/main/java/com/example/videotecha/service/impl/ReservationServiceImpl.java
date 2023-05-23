@@ -1,6 +1,8 @@
 package com.example.videotecha.service.impl;
 
 import com.example.videotecha.dto.ReservationCreationDto;
+import com.example.videotecha.exception.BusinessLogicException;
+import com.example.videotecha.exception.EntityNotFoundException;
 import com.example.videotecha.model.Projection;
 import com.example.videotecha.model.Reservation;
 import com.example.videotecha.model.User;
@@ -38,7 +40,7 @@ public class ReservationServiceImpl implements ReservationService {
         Projection projection = projectionService.findById(reservationCreationDto.getProjectionId());
 
         if(projection.getNumberOfAvailableSeats() - reservationCreationDto.getNumberOfTickets() < 0) {
-            throw new RuntimeException("Not enough tickets available for this projection.");
+            throw new BusinessLogicException("Not enough tickets available for this projection.");
         }
 
         User user = userService.findById(reservationCreationDto.getUserId());
@@ -59,7 +61,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional
     public Long cancel(Long id) {
         Reservation reservation = reservationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("There is no reservation with this id."));
+                .orElseThrow(() -> new EntityNotFoundException("There is no reservation with this id."));
 
         canReservationBeCanceled(reservation.getProjection().getStartDateAndTime());
 
@@ -80,7 +82,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional(readOnly = true)
     public Reservation findById(Long id) {
         return reservationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("There is no reservation with this id."));
+                .orElseThrow(() -> new EntityNotFoundException("There is no reservation with this id."));
     }
 
     private void canReservationBeCanceled(LocalDateTime projectionStartTime) {
@@ -88,7 +90,7 @@ public class ReservationServiceImpl implements ReservationService {
                 && LocalDateTime.now().isBefore(projectionStartTime);
 
         if(isProjectionIn2HoursOrLess) {
-            throw new RuntimeException("Cannot cancel reservation less than two hours before projection.");
+            throw new BusinessLogicException("Cannot cancel reservation less than two hours before projection.");
         }
     }
 
@@ -100,7 +102,7 @@ public class ReservationServiceImpl implements ReservationService {
         int numberOfNewTickets = reservationCreationDto.getNumberOfTickets();
 
         if(reservedNumberOfTickets + numberOfNewTickets > 5) {
-            throw new RuntimeException("This user reached maximum number of reservations for this projection.");
+            throw new BusinessLogicException("This user reached maximum number of reservations for this projection.");
         }
     }
 

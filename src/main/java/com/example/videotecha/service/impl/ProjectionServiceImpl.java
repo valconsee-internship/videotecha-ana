@@ -1,6 +1,8 @@
 package com.example.videotecha.service.impl;
 
 import com.example.videotecha.dto.ProjectionCreationDto;
+import com.example.videotecha.exception.BusinessLogicException;
+import com.example.videotecha.exception.EntityNotFoundException;
 import com.example.videotecha.model.Projection;
 import com.example.videotecha.repository.ProjectionRepository;
 import com.example.videotecha.service.MovieService;
@@ -31,7 +33,7 @@ public class ProjectionServiceImpl implements ProjectionService {
     @Transactional
     public Projection create(ProjectionCreationDto projectionDto) {
         if(projectionDto.getStartDateAndTime().isBefore(LocalDateTime.now())) {
-            throw new RuntimeException("Cannot create projection in the past.");
+            throw new BusinessLogicException("Cannot create projection in the past.");
         }
 
         Projection newProjection = new Projection(
@@ -50,7 +52,7 @@ public class ProjectionServiceImpl implements ProjectionService {
     @Transactional
     public Long delete(Long id) {
         Projection projectionForDeleting = projectionRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(() -> new RuntimeException("There is no projection with this id."));
+                .orElseThrow(() -> new EntityNotFoundException("There is no projection with this id."));
 
         projectionRepository.deleteLogically(projectionForDeleting.getId());
         return projectionForDeleting.getId();
@@ -71,7 +73,7 @@ public class ProjectionServiceImpl implements ProjectionService {
     @Override
     public Projection findById(Long id) {
         return projectionRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(() -> new RuntimeException("There is no projection with this id."));
+                .orElseThrow(() -> new EntityNotFoundException("There is no projection with this id."));
     }
 
     private void isOverlappingWithExistingProjection(Projection newProjection) {
@@ -80,7 +82,7 @@ public class ProjectionServiceImpl implements ProjectionService {
         for (Projection existingProjection : theaterProjections) {
             if(newProjection.getStartDateAndTime().isBefore(existingProjection.getEndDateAndTime())
                     && newProjection.getEndDateAndTime().isAfter(existingProjection.getStartDateAndTime())) {
-                throw new RuntimeException("There is already a projection in this theater at this time.");
+                throw new BusinessLogicException("There is already a projection in this theater at this time.");
             }
         }
     }

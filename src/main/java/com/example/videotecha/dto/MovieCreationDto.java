@@ -2,27 +2,35 @@ package com.example.videotecha.dto;
 
 import com.example.videotecha.model.Movie;
 import com.example.videotecha.model.enums.Genre;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieDto {
+public class MovieCreationDto {
 
-    private Long id;
-
+    @NotBlank(message = "Name is mandatory.")
     private String name;
 
+    @NotBlank(message = "Director is mandatory.")
     private String director;
 
+    @NotEmpty(message = "At least one genre is mandatory.")
     private List<Genre> genres = new ArrayList<>();
 
+    @NotNull(message = "Length is mandatory.")
+    @Positive(message = "Length cannot be negative.")
     private Integer length;
 
+    @NotBlank(message = "Description is mandatory.")
     private String description;
 
-    public MovieDto() {}
+    public MovieCreationDto() {}
 
-    public MovieDto(String name, String director, List<Genre> genres, Integer length, String description) {
+    public MovieCreationDto(String name, String director, List<Genre> genres, Integer length, String description) {
         this.name = name;
         this.director = director;
         this.genres = genres;
@@ -30,17 +38,12 @@ public class MovieDto {
         this.description = description;
     }
 
-    public MovieDto(Movie movie) {
-        this.id = movie.getId();
+    public MovieCreationDto(Movie movie) {
         this.name = movie.getName();
         this.director = movie.getDirector();
         this.genres = movie.getGenres();
         this.length = movie.getLength();
         this.description = movie.getDescription();
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {
@@ -66,7 +69,6 @@ public class MovieDto {
     @Override
     public String toString() {
         return "MovieDto{" +
-                "id='" + id + '\'' +
                 "name='" + name + '\'' +
                 ", director='" + director + '\'' +
                 ", genres=" + genres +

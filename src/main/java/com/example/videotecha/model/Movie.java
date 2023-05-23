@@ -95,6 +95,30 @@ public class Movie {
         return projections;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
+    }
+
+    public void setLength(Integer length) {
+        this.length = length;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public void setProjections(List<Projection> projections) {
         this.projections = projections;
     }

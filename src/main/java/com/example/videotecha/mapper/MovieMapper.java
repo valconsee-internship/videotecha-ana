@@ -1,5 +1,6 @@
 package com.example.videotecha.mapper;
 
+import com.example.videotecha.dto.MovieCreationDto;
 import com.example.videotecha.dto.MovieDto;
 import com.example.videotecha.model.Movie;
 
@@ -10,7 +11,7 @@ public final class MovieMapper {
 
     private MovieMapper() {}
 
-    public static Movie movieDtoToMovie(MovieDto movieDto) {
+    public static Movie movieDtoToMovie(MovieCreationDto movieDto) {
         return new Movie(
                 movieDto.getName(),
                 movieDto.getDirector(),
